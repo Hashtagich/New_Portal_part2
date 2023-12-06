@@ -1,0 +1,46 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+All News
+{% endblock title %}
+
+
+{% block content %}
+<h1>Новостная лента</h1>
+{% if news %}
+<p><i>Количество всех новостей: <u>{{news|length}}</u></i></p>
+<table>
+    <tr>
+        <td>№ п/п</td>
+        <td>Заголовок</td>
+        <td>Дата публикации</td>
+        <td>Краткое содержание</td>
+        <td>Рейтинг</td>
+        <td>Pk</td>
+        <td>Автор</td>
+        <td>Рейтинг автора</td>
+    </tr>
+
+    {% for val in news %}
+    <tr>
+        <ul>
+            <td>{{ forloop.counter }}.</td>
+            <td>{{ val.title|censor }}</td>
+            <td>{{ val.datetime_post|date:'d M. Yг. m:s' }}</td>
+            <td>{{ val.text|truncatechars:20|censor }}</td>
+            <td>{{ val.rating }}</td>
+            <td>{{ val.pk }}</td>
+            <td>{{ val.author.user }}</td>
+            <td>{{ val.author.rating }}</td>
+        </ul>
+    </tr>
+    {% endfor %}
+
+</table>
+{% else %}
+<h2>Товаров нет!</h2>
+{% endif %}
+
+{% endblock content %}
